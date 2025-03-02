@@ -13,6 +13,7 @@ function App() {
       const errors = {};
       if (!values.name){errors.name = "name is required"}
       if(!values.amount){errors.amount = "amount is required"}
+      return errors;
     }
   })
   return (
@@ -27,8 +28,9 @@ function App() {
           value={formik.values.name}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          placeholder='Enter your Name'
+          placeholder='Enter your Name'          
           />
+          {formik.touched.name && formik.errors.name &&(<p className='errors'>{formik.errors.name}</p>)}
         </div>
         <div className="inputs">
           <label>Amount </label>
@@ -40,6 +42,7 @@ function App() {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           />
+          {formik.touched.amount && formik.errors.amount &&(<p className='errors'>{formik.errors.amount}</p>)}
         </div>
         <div className="inputs">
           <button>Submit</button>
