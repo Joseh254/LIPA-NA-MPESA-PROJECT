@@ -1,42 +1,42 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.app{
+    width: 100%;
+    height: 100vh;
+    background-image: url(../src/assets/logo.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.app form{
+padding: 2rem;
+width: 50%;
+/* border: dashed 1px; */
+background-color: white;
+border-radius: 10px;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+p{
+    font-size: 3rem;
+    text-transform: capitalize;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+label{
+    text-transform: capitalize;
+    font-weight: 900;
+    font-size: 1.5rem;
 }
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.inputs{
+    display: flex;
+    flex-direction: column;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+input{
+    padding: 1rem;
+    margin-bottom: 1rem;
+   
 }
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+button{
+    padding: 1rem;
+    background-color: green;
+    color: white;
+    font-weight: 700;
+    font-size: 1.5rem;
 }
