@@ -34,7 +34,7 @@ export async function sendStkPush(request, response) {
             PartyA: phoneNumber,
             PartyB: process.env.SHORTCODE,
             PhoneNumber: phoneNumber,
-            CallBackURL: "https://yourwebsite.co.ke/callbackurl",
+            CallBackURL: "https://ourwebsite.com/callback",
             AccountReference: "account",
             TransactionDesc: "test payment",
         };
@@ -50,7 +50,9 @@ export async function sendStkPush(request, response) {
             }
         );
 
-        response.jsonstatus(200).json({success:true, data:stkResponse.data})
+        response.status(200).json({success:true, data:stkResponse.data})
+        
+        
     } catch (error) {
         console.error("STK Push Error:", error.response?.data || error.message);
         response.status(500).json({ sucess:false, message: "Failed to process STK Push request" });
