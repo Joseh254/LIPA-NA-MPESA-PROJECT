@@ -1,6 +1,7 @@
 import { Router} from 'express'
-import { CreateToken } from '../Controllers/token.js'
+import { CreateToken } from '../Middlewares/token.js'
+import { sendStkPush } from '../Controllers/stkPush.contoller.js'
 const router  = Router()
 
-router.get("/token",CreateToken)
+router.post("/token",CreateToken,sendStkPush)
 export default router;
