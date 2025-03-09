@@ -1,55 +1,81 @@
-import React from 'react'
-import { useFormik } from 'formik'
-import './app.css'
+import React from "react";
+import { useFormik } from "formik";
+import axios from "axios";
+import { API_URL } from "../utills/Config";
+import "./app.css";
 
 function App() {
   const formik = useFormik({
-    initialValues:{name:"", amount:""},
-    onSubmit:async function (values) {
-      console.log(formik.values);
-      
+    initialValues: { phone: "", amount: "" },
+    onSubmit: async function (values) {
+      console.log("Sending data:", values);
+      try {
+       const response= await axios.post(`${API_URL}api/stkPush`, {
+          phoneNumber: String(values.phone), 
+          amount: String(values.amount),
+        }, {
+          headers: { "Content-Type": "application/json" },
+        });
+        
+        
+        console.log(response);
+        alert("Payment request sent successfully!");
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        alert("Payment request failed. Please try again.");
+      }
     },
-    validate:function(values){
+    validate: function (values) {
       const errors = {};
-      if (!values.name){errors.name = "name is required"}
-      if(!values.amount){errors.amount = "amount is required"}
+      if (!values.phone) {
+        errors.phone = "Phone is required";
+      } else if (!/^2547\d{8}$/.test(values.phone)) {
+        errors.phone = "Enter a valid Safaricom number (e.g., 2547123....)";
+      }
+      if (!values.amount) {
+        errors.amount = "Amount is required";
+      } else if (values.amount < 1) {
+        errors.amount = "Amount must be at least 1 Ksh";
+      }
       return errors;
-    }
-  })
+    },
+  });
+
   return (
-    <div className='app'>
-      
-      <form onSubmit={formik.handleSubmit}> 
+    <div className="app">
+      <form onSubmit={formik.handleSubmit}>
         <p>Lipa na Mpesa</p>
         <div className="inputs">
-          <label>Name</label>
-          <input type="text" 
-          name='name'
-          value={formik.values.name}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          placeholder='Enter your Name'          
+          <label>Phone Number</label>
+          <input
+            type="text"
+            name="phone"
+            value={formik.values.phone}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            placeholder="Enter your phone number"
           />
-          {formik.touched.name && formik.errors.name &&(<p className='errors'>{formik.errors.name}</p>)}
+          {formik.touched.phone && formik.errors.phone && <p className="errors">{formik.errors.phone}</p>}
         </div>
         <div className="inputs">
           <label>Amount </label>
-          
-          <input type="number"
-          name='amount'
-          value={formik.values.amount}
-          placeholder='Enter Amount in Ksh'
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
+          <input
+            type="number"
+            name="amount"
+            value={formik.values.amount}
+            placeholder="Enter Amount in Ksh"
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            min="1"
           />
-          {formik.touched.amount && formik.errors.amount &&(<p className='errors'>{formik.errors.amount}</p>)}
+          {formik.touched.amount && formik.errors.amount && <p className="errors">{formik.errors.amount}</p>}
         </div>
         <div className="inputs">
-          <button>Submit</button>
+          <button type="submit">Submit</button>
         </div>
       </form>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -8,6 +8,8 @@ export async function sendStkPush(request, response) {
         }
 
         const { phoneNumber, amount } = request.body; 
+        console.log(request.body);
+        
         if (!phoneNumber || !amount) {
             return response.status(400).json({ success:false, error: "Phone number and amount are required" });
         }
@@ -54,6 +56,8 @@ export async function sendStkPush(request, response) {
         
         
     } catch (error) {
+        console.log(error);
+        
         console.error("STK Push Error:", error.response?.data || error.message);
         response.status(500).json({ sucess:false, message: "Failed to process STK Push request" });
     }

@@ -15,7 +15,7 @@ export async function CreateToken(request, response, next) {
       }
     );
 
-    console.log("Token Generated:", res.data);
+    // console.log("Token Generated:", res.data);
 
     // Store token in request object for use in next middleware/controller
     request.token = res.data.access_token;
