@@ -44,3 +44,6 @@ button{
     font-size: 1rem;
     color: red;
 }
+button:disabled {
+    background-color: rgb(147, 212, 94) !important;
+}

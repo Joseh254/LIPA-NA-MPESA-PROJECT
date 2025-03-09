@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
 import { API_URL } from "../utills/Config";
 import "./app.css";
 
 function App() {
+  const [loading, SetIsLoading] = useState(false)
+  const [error, setError] = useState(null)
   const formik = useFormik({
     initialValues: { phone: "", amount: "" },
     onSubmit: async function (values) {
       console.log("Sending data:", values);
       try {
+        SetIsLoading(true)
        const response= await axios.post(`${API_URL}api/stkPush`, {
           phoneNumber: String(values.phone), 
           amount: String(values.amount),
@@ -21,9 +24,10 @@ function App() {
         console.log(response);
         alert("Payment request sent successfully!");
       } catch (error) {
+        
         console.error("Error submitting form:", error);
-        alert("Payment request failed. Please try again.");
-      }
+     
+      }finally{SetIsLoading(false)}
     },
     validate: function (values) {
       const errors = {};
@@ -71,7 +75,7 @@ function App() {
           {formik.touched.amount && formik.errors.amount && <p className="errors">{formik.errors.amount}</p>}
         </div>
         <div className="inputs">
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={loading}>{loading? "Loading..":"Submit"}</button>
         </div>
       </form>
     </div>
